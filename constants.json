@@ -1,0 +1,24 @@
+{
+  "socialNetwork": [
+    {
+      "url": "https://facebook.com",
+      "icon": "facebook",
+      "hoverColor": "text-blue-700"
+    },
+    {
+      "url": "https://twitter.com",
+      "icon": "twitter",
+      "hoverColor": "text-blue-500"
+    },
+    {
+      "url": "https://instagram.com",
+      "icon": "instagram",
+      "hoverColor": "text-pink-600"
+    },
+    {
+      "url": "https://youtube.com",
+      "icon": "youtube",
+      "hoverColor": "text-red-500"
+    }
+  ]
+}
