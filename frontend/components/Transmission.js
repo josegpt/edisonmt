@@ -1,8 +1,9 @@
 import React from "react"
 import Player from "./Player"
+import c from "../helpers"
 
 function Transmission({ status, watching, stream, src }) {
-  if (status === "desconectado") {
+  if (status === c("offline")) {
     return (
       <section className="flex flex-col items-center">
         <h1 className="flex my-2 text-3xl capitalize">

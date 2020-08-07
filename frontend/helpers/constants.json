@@ -1,0 +1,29 @@
+{
+  "brand": "EdisonMT",
+  "logoSmall": "/img/EMT, Name@4x.png",
+  "logoBig": "/img/EMT, Side Logo@4x.png",
+  "live": "en directo",
+  "offline": "desconectado",
+  "404": "Parece que lo que buscabas no esta disponible",
+  "goBack": "regresar",
+  "notice": "Ningun video se encuentra alojado en nuestros servidores.",
+  "followUs": "siguenos",
+  "apiServer": "http://localhost:5000",
+  "socialNetwork": [
+    {
+      "url": "https://www.facebook.com/Edison-MT-121565862722272/",
+      "icon": "facebook",
+      "hoverColor": "text-blue-700"
+    },
+    {
+      "url": "https://twitter.com/EdisonMatos30",
+      "icon": "twitter",
+      "hoverColor": "text-blue-500"
+    },
+    {
+      "url": "https://www.youtube.com/c/EdisonMT",
+      "icon": "youtube",
+      "hoverColor": "text-red-500"
+    }
+  ]
+}

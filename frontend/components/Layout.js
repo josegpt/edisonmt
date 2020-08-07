@@ -1,9 +1,8 @@
 import React from "react"
-import Link from "next/link"
 import classnames from "classnames"
 import Logo from "./Logo"
 import Icon from "./Icon"
-import constants from "../constants.json"
+import c from "../helpers"
 
 function Layout({ children }) {
   return (
@@ -17,8 +16,8 @@ function Layout({ children }) {
       </main>
       <footer className="flex flex-col items-center justify-center my-1">
         <div className="flex my-4">
-          <span className="mr-2 font-semibold">Siguenos</span>
-          {constants.socialNetwork.map((item, i) => (
+          <span className="mr-2 font-semibold capitalize">{c("followUs")}</span>
+          {c("socialNetwork").map((item, i) => (
             <a
               href={item.url}
               key={i}
@@ -30,9 +29,7 @@ function Layout({ children }) {
             </a>
           ))}
         </div>
-        <p className="text-xs text-center">
-          Ningun video se encuentra alojado en nuestros servidores.
-        </p>
+        <p className="text-xs text-center">{c("notice")}</p>
       </footer>
     </div>
   )

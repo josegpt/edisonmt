@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "RTMP",
+  "main": "server.js",
+  "author": "Jose G Perez Taveras",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "node-media-server": "^2.2.2"
+  }
+}
