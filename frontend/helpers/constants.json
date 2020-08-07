@@ -8,7 +8,7 @@
   "goBack": "regresar",
   "notice": "Ningun video se encuentra alojado en nuestros servidores.",
   "followUs": "siguenos",
-  "apiServer": "http://localhost:5000",
+  "apiServer": "rtmp-server:5000",
   "socialNetwork": [
     {
       "url": "https://www.facebook.com/Edison-MT-121565862722272/",
