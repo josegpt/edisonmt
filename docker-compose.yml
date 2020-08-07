@@ -3,10 +3,12 @@ version: "3"
 services:
   frontend:
     build: ./frontend
+    container_name: frontend
     depends_on:
       - swag
   swag:
     build: ./
+    container_name: swag
     cap_add:
       - NET_ADMIN
     environment:
@@ -22,4 +24,5 @@ services:
     ports:
       - 443:443
       - 80:80
+      - 1935:1935
     restart: unless-stopped

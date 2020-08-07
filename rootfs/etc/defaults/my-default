@@ -39,21 +39,6 @@ server {
 	}
 }
 
-rtmp { 
-	server { 
-		listen 1935;
-		ping 30s;
-		notify_method get;
-
-		application stream { 
-			live on; 
-			interleave on;
-			on_publish http://backend:5000/auth;
-			record off;
-		} 
-	} 
-} 
-
 # enable subdomain method reverse proxy confs
 include /config/nginx/proxy-confs/*.subdomain.conf;
 # enable proxy cache for auth

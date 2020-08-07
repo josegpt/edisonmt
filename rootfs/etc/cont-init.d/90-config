@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+
+HOME=/config
+
+cat "/config/etc/defaults/my-default" > $HOME/nginx/site-confs/default
+cat "/config/etc/defaults/my-nginx.conf" > $HOME/nginx/nginx.conf
