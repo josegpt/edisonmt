@@ -1,27 +1,31 @@
-const NodeMediaServer = require('node-media-server')
+const Koa = require("koa")
+const Router = require("@koa/router")
+const websockify = require("koa-websocket")
 
-const config = {
-  logType: 3,
-  rtmp: {
-    port: 1935,
-    chunk_size: 60000,
-    gop_cache: true,
-    ping: 30,
-    ping_timeout: 60,
-  },
-  http: {
-    port: 5000,
-    allow_origin: '*',
-    api: true,
-  },
-  auth: {
-    api: true,
-    api_user: process.env.API_USER,
-    api_pass: process.env.API_PASSWORD,
-    publish: true,
-    secret: process.env.API_SECRET,
-  },
-}
+const app = websockify(new Koa())
+const http = new Router()
+const ws = new Router()
 
-let nms = new NodeMediaServer(config)
-nms.run()
+http
+  .post("/auth", async (ctx) => {
+    ctx.status = 201
+    ctx.state.viewersCount = 0
+  })
+  .get("(.*)", (ctx) => {
+    ctx.status = 401
+    ctx.body = "Unauthorized"
+  })
+
+ws.get("/socket", async (ctx) => {
+  ctx.websocket.send("Hello Socket")
+  ctx.websocket.on("message", (message) => console.log(message))
+})
+
+app.use(http.routes()).use(http.allowedMethods())
+app.ws.use(ws.routes()).use(ws.allowedMethods())
+
+app.on("error", (err) => {
+  log.error("server error", err)
+})
+
+app.listen(5000)

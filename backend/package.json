@@ -6,7 +6,15 @@
   "author": "Jose G Perez Taveras",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "dev": "nodemon"
+  },
   "dependencies": {
-    "node-media-server": "^2.2.2"
+    "@koa/router": "^9.3.1",
+    "koa": "^2.13.0",
+    "koa-websocket": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

@@ -8,6 +8,4 @@ RUN npm i
 
 COPY . .
 
-EXPOSE 1935 5000
-
 CMD ["node","server.js"]

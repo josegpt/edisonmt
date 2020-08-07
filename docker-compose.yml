@@ -3,10 +3,10 @@ version: "3"
 services:
   frontend:
     build: ./frontend
-    container_name: frontend
+    depends_on:
+      - swag
   swag:
-    image: linuxserver/letsencrypt
-    container_name: swag
+    build: ./
     cap_add:
       - NET_ADMIN
     environment:
