@@ -1,14 +1,21 @@
 version: "3"
 
 services:
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: unless-stopped
   frontend:
     build: ./frontend
     container_name: frontend
     depends_on:
       - swag
+      - backend
+    restart: unless-stopped
   swag:
     build: ./
     container_name: swag
+    depends_on: backend
     cap_add:
       - NET_ADMIN
     environment:
