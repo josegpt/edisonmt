@@ -1,7 +1,7 @@
 {
   "brand": "EdisonMT",
-  "logoBig": "/img/EMT, Side Logo@4x.png",
-  "logoSmall": "/img/EMT, Name@4x.png",
+  "logoBig": "/img/side-logo.png",
+  "logoSmall": "/img/name-logo.png",
   "live": "en directo",
   "offline": "desconectado",
   "goBack": "regresar",
