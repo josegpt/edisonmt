@@ -37,6 +37,16 @@ server {
     set $upstream_proto http;
     proxy_pass $upstream_proto://$upstream_app:$upstream_port;
 	}
+
+	# stream
+	location /live {
+		root /tmp/hls;
+	}
+
+	# stats
+	location /stats {
+		rtmp_stat all;
+	}
 }
 
 # enable subdomain method reverse proxy confs
