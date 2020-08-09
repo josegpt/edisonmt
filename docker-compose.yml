@@ -4,6 +4,8 @@ services:
   frontend:
     build: ./app
     container_name: frontend
+    env_file:
+      - edisonmt.env
     restart: unless-stopped
   swag:
     image: linuxserver/nginx
@@ -15,7 +17,8 @@ services:
       - PGID=1000
       - TZ=America/New_York
     volumes:
-      - ~/config:/config
+      # - ~/config:/config
+      - C:\\Users\\josegpt-laptop\\Desktop\\edisonmt\\config:/config
     ports:
       - 80:80
       - 443:443

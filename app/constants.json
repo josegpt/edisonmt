@@ -8,7 +8,8 @@
   "refresh": "refrescar",
   "notice": "Ningun video se encuentra alojado en nuestros servidores.",
   "followUs": "siguenos",
-  "rtmpServer": "http://localhost:3000",
+  "apiServer": "http://localhost:3000",
+  "rtmpServer": "http://swag",
   "404": "pagina no disponible",
   "socialNetwork": [
     {

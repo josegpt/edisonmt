@@ -17,11 +17,11 @@ function Layout({ children }) {
       <header className="flex items-center justify-center">
         <Logo />
       </header>
-      <main className="flex items-center justify-center flex-1 px-4">
-        <div className="container">{children}</div>
+      <main className="flex items-center flex-1">
+        {children}
       </main>
       <footer className="flex flex-col items-center justify-center my-1">
-        <div className="flex my-4">
+        <div className="flex my-2">
           <span className="mr-2 font-semibold capitalize">{c("followUs")}</span>
 
           {c("socialNetwork").map((item, i) => (
@@ -30,7 +30,7 @@ function Layout({ children }) {
               href={item.url}
               target="_blank"
               rel="external"
-              className="mr-4 hover:{item.hoverColor}"
+              className={`mr-4 hover:${item.hoverColor}`}
             >
               <Icon name={item.icon} />
             </a>
