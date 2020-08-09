@@ -1,17 +1,15 @@
-const atImport = require("postcss-import")
-const tailwindcss = require("tailwindcss")
-const purgecss = require("@fullhuman/postcss-purgecss")({
-  content: ["./src/**/*.html", "./src/**/*.svelte", "./src/**/*.css"],
-  whitelistPatterns: [/svelte-/],
-  defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
-})
-const autoprefixer = require("autoprefixer")
-
 module.exports = {
-  plugins: [
-    atImport,
-    tailwindcss,
-    autoprefixer,
-    ...(process.env.NODE_ENV === "production" ? [purgecss] : []),
-  ],
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+    ...(process.env.NODE_ENV === "production"
+      ? {
+          "@fullhuman/postcss-purgecss": {
+            content: ["./components/**/*.js", "./pages/**/*.js"],
+            defaultExtractor: (content) =>
+              content.match(/[\w-/:]+(?<!:)/g) || [],
+          },
+        }
+      : {}),
+  },
 }

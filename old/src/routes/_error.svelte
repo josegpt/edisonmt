@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>{status}</title>
+  <title>{status} | {c('brand')}</title>
 </svelte:head>
 
 <section class="flex flex-col items-center justify-center">
@@ -15,7 +15,8 @@
     <div class="flex items-center mr-4 text-3xl text-gray-200">
       <span class="relative flex w-3 h-3">
         <span
-          class="absolute inline-flex w-full h-full bg-red-400 rounded-full opacity-75 animate-ping" />
+          class="absolute inline-flex w-full h-full bg-red-400 rounded-full
+          opacity-75 animate-ping" />
         <span class="relative inline-flex w-3 h-3 bg-red-500 rounded-full" />
       </span>
       <span class="ml-2">

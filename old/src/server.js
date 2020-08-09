@@ -1,13 +1,9 @@
-import { Server } from "http"
 import Express from "express"
 import compression from "compression"
-import ws from "socket.io"
 import * as sapper from "@sapper/server"
 
 const { PORT } = process.env
 const app = Express()
-const server = Server(app)
-const io = ws(server)
 
 app.use(Express.urlencoded({ extended: false }))
 
@@ -22,9 +18,13 @@ app.post("/auth", (req, res) => {
   }
 })
 
+app.get("/status", (req, res) => {
+  res.json({ status: "offline" })
+})
+
 app.use(sapper.middleware())
 
-server.listen(PORT, (err) => {
+app.listen(PORT, (err) => {
   if (err) throw err
   console.log(`> Ready on http://localhost:3000`)
 })

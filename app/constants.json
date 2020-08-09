@@ -5,11 +5,11 @@
   "live": "en directo",
   "offline": "desconectado",
   "goBack": "regresar",
+  "refresh": "refrescar",
   "notice": "Ningun video se encuentra alojado en nuestros servidores.",
   "followUs": "siguenos",
-  "apiServer": "http://localhost:5000",
-  "404": "Parece que lo que buscabas no esta disponible",
-  "500": "error en el servidor",
+  "rtmpServer": "http://localhost:3000",
+  "404": "pagina no disponible",
   "socialNetwork": [
     {
       "url": "https://www.facebook.com/Edison-MT-121565862722272/",
