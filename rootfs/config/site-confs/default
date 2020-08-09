@@ -39,8 +39,8 @@ server {
 	}
 
 	# stream
-	location /live {
-		root /tmp/hls;
+	location /hls {
+		root /tmp;
 	}
 
 	# stats
