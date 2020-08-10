@@ -10,7 +10,11 @@ export default async (req, res) => {
     parseString(response.data, (err, { rtmp }) => {
       if (err) res.json({ status: "offline" })
       const streamName = rtmp.server[0].application[0].live[0].stream[0].name[0]
-      res.json({ status: "live", title: streamName, stream: `http://localhost/hls/${streamName}.m3u8` })
+      res.json({
+        status: "live",
+        title: streamName,
+        stream: `http://edisonmt.com/hls/${streamName}.m3u8`,
+      })
     })
   } catch (err) {
     res.json({ status: "offline" })
