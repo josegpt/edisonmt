@@ -12,35 +12,20 @@ services:
     container_name: swag
     depends_on:
       - frontend
+    cap_add:
+      - NET_ADMIN
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/New_York
+      - URL=edisonmt.com
+      - SUBDOMAINS=www
+      - VALIDATION=http
+      - EMAIL=edisonpremise@gmail.com
     volumes:
-      # - ~/config:/config
-      - C:\\Users\\josegpt-laptop\\Desktop\\edisonmt\\config:/config
+      - ~/config:/config
     ports:
-      - 80:80
       - 443:443
+      - 80:80
       - 1935:1935
     restart: unless-stopped
-  # swag:
-  #   build: ./
-  #   container_name: swag
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=America/New_York
-  #     - URL=edisonmt.com
-  #     - SUBDOMAINS=www
-  #     - VALIDATION=http
-  #     - EMAIL=edisonpremise@gmail.com
-  #   volumes:
-  #     - ~/config:/config
-  #   ports:
-  #     - 443:443
-  #     - 80:80
-  #     - 1935:1935
-  #   restart: unless-stopped

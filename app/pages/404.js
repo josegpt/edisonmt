@@ -1,5 +1,4 @@
 import Link from "next/link"
-import c from "../helpers"
 
 function Custom404() {
   return (
@@ -13,9 +12,9 @@ function Custom404() {
           <span className="text-6xl text-red-500">404</span>
         </div>
       </h1>
-      <span className="text-xl">{c("404")}</span>
+      <span className="text-xl">pagina no disponible</span>
       <Link href="/">
-        <a className="text-xl text-blue-500 ">{c("goBack")}</a>
+        <a className="text-xl text-blue-500 ">regresar</a>
       </Link>
     </section>
   )

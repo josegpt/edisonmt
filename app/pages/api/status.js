@@ -1,22 +1,14 @@
-import axios from "axios"
-import { parseString } from "xml2js"
-import c from "../../helpers"
+import db from "./nedb"
 
 export default async (req, res) => {
-  res.statusCode = 200
-  res.setHeader("Content-Type", "application/json")
   try {
-    const response = await axios.get(`${c("rtmpServer")}/stats`)
-    parseString(response.data, (err, { rtmp }) => {
-      if (err) res.json({ status: "offline" })
-      const streamName = rtmp.server[0].application[0].live[0].stream[0].name[0]
-      res.json({
-        status: "live",
-        title: streamName,
-        stream: `http://edisonmt.com/hls/${streamName}.m3u8`,
-      })
-    })
+    const stream = await db.findOne({ status: "live" })
+    if (!stream) {
+      res.status(200).json({ status: "offline" })
+    } else {
+      res.status(200).json(stream)
+    }
   } catch (err) {
-    res.json({ status: "offline" })
+    res.status(200).json({ status: "offline" })
   }
 }
