@@ -1,7 +1,6 @@
 import db from "./nedb"
 
 export default async (req, res) => {
-  console.log(req)
   if (req.method === "POST") {
     try {
       const stream = await db.findOne({ status: "live" })
