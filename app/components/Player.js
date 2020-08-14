@@ -3,8 +3,9 @@ import axios from "axios"
 import ReactPlayer from "react-player/lazy"
 
 function Player({ url }) {
-  const onPlay = async () => await axios.post("http://localhost:3000/api/play")
-  const onDone = async () => await axios.post("http://localhost:3000/api/play")
+  const apiServer = "https://edisonmt.com/"
+  const onPlay = async () => await axios.post(`${apiServer}/api/play`)
+  const onDone = async () => await axios.post(`${apiServer}/api/done`)
   return (
     <ReactPlayer
       url={url}
