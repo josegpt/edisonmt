@@ -5,9 +5,9 @@ export default async (req, res) => {
     try {
       const stream = await db.findOne({ status: "live" })
       await db.update({ _id: stream._id }, { $inc: { viewers: 1 } }, {})
-      res.status(200).end(stream.status)
+      res.status(200).json({ status: stream.status })
     } catch (err) {
-      res.status(200).end("offline")
+      res.status(200).json({ status: "offline" })
     }
   }
 }

@@ -18,7 +18,6 @@ export default async (req, res) => {
       }
     } else {
       const count = await db.count()
-      console.log(count)
       if (count > 0) await db.remove({}, { multi: true })
       res.status(404).send("Not Found")
     }
