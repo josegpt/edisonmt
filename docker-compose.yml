@@ -8,7 +8,7 @@ services:
       - edisonmt.env
     restart: unless-stopped
   swag:
-    image: linuxserver/nginx
+    image: linuxserver/letsencrypt
     container_name: swag
     depends_on:
       - frontend

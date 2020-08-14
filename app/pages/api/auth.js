@@ -2,7 +2,7 @@ import db from "./nedb"
 
 export default async (req, res) => {
   if (req.method === "POST") {
-    if (req.body.streamKey === "123") {
+    if (req.body.streamKey === process.env.RTMP_SECRET) {
       const stream = {
         status: "live",
         title: req.body.name,
