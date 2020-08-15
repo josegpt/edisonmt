@@ -1,4 +1,5 @@
 import React from "react"
+import classnames from "classnames"
 import Icon from "./Icon"
 
 function SocialNetwork() {
@@ -29,7 +30,7 @@ function SocialNetwork() {
           href={item.url}
           target="_blank"
           rel="external"
-          className={`mr-4 hover:${item.hoverColor}`}
+          className={classnames("mr-4", `hover:${item.hoverColor}`)}
         >
           <Icon name={item.icon} />
         </a>

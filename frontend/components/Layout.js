@@ -5,7 +5,7 @@ import SocialNetwork from "./SocialNetwork"
 
 function Layout({ children }) {
   return (
-    <div className="flex flex-col min-h-screen font-sans antialiased text-gray-200 bg-black">
+    <div className="flex flex-col min-h-screen font-sans antialiased text-white bg-black">
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -16,7 +16,7 @@ function Layout({ children }) {
       <header className="flex items-center justify-center">
         <Logo />
       </header>
-      <main className="flex items-center flex-1">{children}</main>
+      <main className="flex flex-1 pt-4">{children}</main>
       <footer className="flex flex-col items-center justify-center my-1">
         <SocialNetwork />
         <p className="text-xs text-center">

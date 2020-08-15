@@ -2,7 +2,7 @@ version: "3"
 
 services:
   frontend:
-    build: ./app
+    build: ./frontend
     container_name: frontend
     env_file:
       - edisonmt.env

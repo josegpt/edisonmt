@@ -2,23 +2,24 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "main": "server.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "nedb": "^1.8.0",
+    "classnames": "^2.2.6",
     "next": "9.5.1",
     "react": "16.13.1",
     "react-chat-widget": "^3.0.5",
     "react-dom": "16.13.1",
     "react-player": "^2.6.0",
-    "xml2js": "^0.4.23"
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.8.6",
+    "nodemon": "^2.0.4",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.0.5",
     "tailwindcss": "^1.6.2"
