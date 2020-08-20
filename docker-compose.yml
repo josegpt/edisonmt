@@ -14,9 +14,6 @@ services:
   swag:
     image: linuxserver/letsencrypt
     container_name: swag
-    depends_on:
-      - frontend
-      - backend
     cap_add:
       - NET_ADMIN
     environment:
@@ -32,5 +29,4 @@ services:
     ports:
       - 443:443
       - 80:80
-      - 1935:1935
     restart: unless-stopped
