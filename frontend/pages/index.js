@@ -1,15 +1,27 @@
-import { useState } from "react"
+import _ from "lodash"
+import { useState, useEffect } from "react"
+import Loader from "../components/Loader"
 import useSocket from "../hooks/useSocket"
 import Transmission from "../components/Transmission"
 
 function Index() {
-  const [channels, setChannels] = useState([])
-  const socket = useSocket("channels", (payload) => {
-    setChannels(payload)
-  })
-  socket.emit("init")
+  const [channels, setChannels] = useState({ isLoading: true, data: {} })
+  const socket = useSocket()
 
-  if (channels.length === 0) {
+  useEffect(() => {
+    if (!socket.current) return
+    setChannels((channels) => ({ ...channels, isLoader: true }))
+    socket.current.emit("channels")
+    socket.current.on("channels", (payload) => {
+      setChannels(() => ({ data: { ...payload }, isLoading: false }))
+    })
+  }, [socket.current])
+
+  if (channels.isLoading) {
+    return <Loader />
+  }
+
+  if (_.isEmpty(channels.data)) {
     return (
       <section className="flex items-center justify-center flex-1">
         <h1 className="flex justify-center text-3xl capitalize">
@@ -25,13 +37,17 @@ function Index() {
     )
   }
 
-  return channels.map((channel) => (
-    <Transmission
-      key={channel.title}
-      title={channel.title}
-      streams={channel.streams}
-    />
-  ))
+  return (
+    <main className="flex-1">
+      {Object.keys(channels.data).map((channel) => (
+        <Transmission
+          key={channel}
+          title={channel}
+          streams={channels.data[channel]}
+        />
+      ))}
+    </main>
+  )
 }
 
 export default Index

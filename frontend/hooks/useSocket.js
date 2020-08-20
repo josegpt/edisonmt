@@ -1,13 +1,17 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import io from "socket.io-client"
 
-const socket = io("http://10.0.0.103:5000")
+export default function useSocket() {
+  const socket = useRef(null)
 
-export default function useSocket(eventName, cb) {
   useEffect(() => {
-    socket.on(eventName, cb)
-    return () => socket.off(eventName, cb)
-  }, [eventName, cb])
+    socket.current = io("http://backend:5000")
+
+    return () => {
+      socket.current.off()
+      socket.current.disconnect()
+    }
+  }, [])
 
   return socket
 }

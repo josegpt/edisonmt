@@ -1,32 +1,42 @@
-import { useState } from "react"
+import _ from "lodash"
 import { useRouter } from "next/router"
+import { useState, useEffect } from "react"
 import useSocket from "../../hooks/useSocket"
 import Player from "../../components/Player"
+import Loader from "../../components/Loader"
 import { Primary } from "../../components/Typography"
 
 function Stream() {
-  const [stream, setStream] = useState({})
+  const [channels, setChannels] = useState({})
   const router = useRouter()
-  const socket = useSocket("stream", (payload) => {
-    setStream(payload)
-  })
-  socket.emit("stream", router.query.slug)
+  const socket = useSocket()
 
-  if (Object.keys(stream).length === 0) {
-    return <h1>Loading...</h1>
+  useEffect(() => {
+    if (!socket.current) return
+    socket.current.emit("channels", router.query.slug)
+    socket.current.on("channels", (payload) => {
+      setChannels(payload)
+    })
+  }, [socket.current])
+
+  if (_.isEmpty(channels)) {
+    return <Loader />
   }
+
+  const [channel, stream] = router.query.slug
+  const { publisher, subscribers } = channels[channel][stream]
 
   return (
     <section className="flex items-center flex-1 px-4">
       <div className="container mx-auto">
         <Primary
-          title={`${stream.publisher.app} ${stream.subscribers.length}`}
-          subtitle={stream.publisher.stream}
+          title={`${publisher.app} ${subscribers.length}`}
+          subtitle={publisher.stream}
         />
 
         <main className="relative pb-1/3">
           <Player
-            url={`http://10.0.0.103:8000/${stream.publisher.app}/${stream.publisher.stream}.flv`}
+            url={`https://edisonmt.com/${publisher.app}/${publisher.stream}.flv`}
           />
         </main>
       </div>

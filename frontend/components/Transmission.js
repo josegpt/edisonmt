@@ -9,7 +9,8 @@ function Transmission({ title, streams }) {
         <Primary title={title} />
 
         <main className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {streams.map(({ publisher, subscribers }) => {
+          {Object.keys(streams).map((stream) => {
+            const { publisher, subscribers } = streams[stream]
             return (
               <Card
                 key={publisher.clientId}

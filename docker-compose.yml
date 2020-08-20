@@ -4,6 +4,10 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
+    restart: unless-stopped
+  backend:
+    build: ./backend
+    container_name: backend
     env_file:
       - edisonmt.env
     restart: unless-stopped
@@ -12,6 +16,7 @@ services:
     container_name: swag
     depends_on:
       - frontend
+      - backend
     cap_add:
       - NET_ADMIN
     environment:

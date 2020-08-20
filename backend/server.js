@@ -1,4 +1,5 @@
 const NodeMediaServer = require("node-media-server")
+const _ = require("lodash")
 const axios = require("axios")
 const io = require("socket.io")
 
@@ -17,7 +18,7 @@ const config = {
   },
   auth: {
     publish: true,
-    secret: "nodemedia2017privatekey",
+    secret: process.env.RTMP_SECRET,
   },
 }
 
@@ -25,39 +26,23 @@ const server = io.listen(5000)
 const nms = new NodeMediaServer(config)
 nms.run()
 
-function transformResponse(response) {
-  const channels = Object.keys(response)
-  const streams = channels.map((channel) => {
-    const streams = Object.keys(response[channel]).map(
-      (stream) => response[channel][stream]
-    )
-    return { title: channel, streams }
-  }, [])
-
-  return streams
-}
-
 async function updateChannels(socket) {
   try {
     const { data } = await axios.get("http://localhost:8000/api/streams")
-    socket.emit("channels", transformResponse(data))
+    socket.emit("channels", data)
   } catch (err) {
     socket.emit("channels", err)
   }
 }
 
-async function updateStream(socket, payload) {
-  try {
-    const { data } = await axios.get("http://localhost:8000/api/streams")
-    const stream = data[payload[0]][payload[1]]
-    socket.emit("stream", stream)
-  } catch (err) {
-    socket.emit("stream", err)
-  }
-}
-
 server.on("connection", function (socket) {
   console.log("user connected")
+
+  socket.on("disconnect", () => console.log("user disconnected"))
+
+  socket.on("channels", () => {
+    updateChannels(socket)
+  })
 
   nms.on("prePublish", () => {
     updateChannels(socket)
@@ -73,13 +58,5 @@ server.on("connection", function (socket) {
 
   nms.on("donePlay", () => {
     updateChannels(socket)
-  })
-
-  socket.on("init", () => {
-    updateChannels(socket)
-  })
-
-  socket.on("stream", (payload) => {
-    updateStream(socket, payload)
   })
 })
