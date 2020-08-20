@@ -24,7 +24,7 @@ services:
       - PGID=1000
       - TZ=America/New_York
       - URL=edisonmt.com
-      - SUBDOMAINS=www
+      - SUBDOMAINS=www,api,rtmp,flv
       - VALIDATION=http
       - EMAIL=edisonpremise@gmail.com
     volumes:

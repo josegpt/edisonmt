@@ -36,7 +36,7 @@ function Stream() {
 
         <main className="relative pb-1/3">
           <Player
-            url={`https://edisonmt.com/${publisher.app}/${publisher.stream}.flv`}
+            url={`https://flv.edisonmt.com/${publisher.app}/${publisher.stream}.flv`}
           />
         </main>
       </div>
