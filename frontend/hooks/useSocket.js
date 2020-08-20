@@ -5,7 +5,7 @@ export default function useSocket() {
   const socket = useRef(null)
 
   useEffect(() => {
-    socket.current = io("wss://api.edisonmt.com")
+    socket.current = io("https://api.edisonmt.com")
 
     return () => {
       socket.current.off()

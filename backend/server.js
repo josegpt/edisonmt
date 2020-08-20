@@ -16,10 +16,6 @@ const config = {
     port: 8000,
     allow_origin: "*",
   },
-  auth: {
-    publish: true,
-    secret: process.env.RTMP_SECRET,
-  },
 }
 
 const server = io.listen(5000)

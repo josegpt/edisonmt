@@ -29,4 +29,5 @@ services:
     ports:
       - 443:443
       - 80:80
+      - 1935:1935
     restart: unless-stopped
