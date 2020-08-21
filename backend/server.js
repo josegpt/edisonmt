@@ -46,9 +46,12 @@ async function updateChannels(socket) {
 }
 
 server.on("connection", (socket) => {
-  socket.on("channels", () => {
-    updateChannels(socket)
-  })
+  console.log(`Socket ${socket.id} connected.`)
+  updateChannels(socket)
+
+  socket.on("disconnect", () =>
+    console.log(`Socket ${socket.id} disconnected.`)
+  )
 
   nms.on("prePublish", (id, _, args) => {
     const session = nms.getSession(id)

@@ -1,30 +1,47 @@
 import _ from "lodash"
 import { useRouter } from "next/router"
-import { useState, useEffect } from "react"
+import Link from "next/link"
 import useSocket from "../../hooks/useSocket"
 import Player from "../../components/Player"
 import Loader from "../../components/Loader"
 import { Primary } from "../../components/Typography"
+import { FETCH_CHANNELS_REQUEST, FETCH_CHANNELS_SUCCESS } from "../../store"
 
-function Stream() {
-  const [channels, setChannels] = useState({})
+function Stream({ state, dispatch }) {
   const router = useRouter()
-  const socket = useSocket()
 
-  useEffect(() => {
-    if (!socket.current) return
-    socket.current.emit("channels", router.query.slug)
-    socket.current.on("channels", (payload) => {
-      setChannels(payload)
-    })
-  }, [socket.current])
+  useSocket("channels", (payload) => {
+    dispatch({ type: FETCH_CHANNELS_REQUEST })
+    dispatch({ type: FETCH_CHANNELS_SUCCESS, payload })
+  })
 
-  if (_.isEmpty(channels)) {
+  if (state.isLoading) {
     return <Loader />
   }
 
+  if (_.isEmpty(state.data)) {
+    return (
+      <section className="flex flex-col items-center justify-center flex-1 capitalize">
+        <h1 className="flex">
+          <div className="flex items-center mr-4 text-gray-200">
+            <span className="relative flex w-3 h-3">
+              <span className="absolute inline-flex w-full h-full bg-red-400 rounded-full opacity-75 animate-ping" />
+              <span className="relative inline-flex w-3 h-3 bg-red-500 rounded-full" />
+            </span>
+            <span className="ml-2 text-xl font-semibold sm:text-3xl">
+              transmision terminada
+            </span>
+          </div>
+        </h1>
+        <Link href="/">
+          <a className="text-xl text-blue-500 ">regresar</a>
+        </Link>
+      </section>
+    )
+  }
+
   const [channel, stream] = router.query.slug
-  const { publisher, subscribers } = channels[channel][stream]
+  const { publisher, subscribers } = state.data[channel][stream]
 
   return (
     <section className="flex items-center flex-1 px-4">
