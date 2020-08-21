@@ -19,7 +19,7 @@ function Stream({ state, dispatch }) {
     return <Loader />
   }
 
-  if (_.isEmpty(state.data)) {
+  if (_.isEmpty(state.data) || state.error) {
     return (
       <section className="flex flex-col items-center justify-center flex-1 capitalize">
         <h1 className="flex">
