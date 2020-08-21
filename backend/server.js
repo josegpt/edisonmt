@@ -31,7 +31,7 @@ const server = io.listen(5000)
 const nms = new NodeMediaServer(config)
 nms.run()
 
-async function updateChannels(socket) {
+async function updateChannels() {
   try {
     const { data } = await axios.get("http://localhost:8000/api/streams", {
       auth: {
@@ -39,35 +39,34 @@ async function updateChannels(socket) {
         password: PASS,
       },
     })
-    socket.emit("channels", data)
+    server.emit("channels", data)
   } catch (err) {
-    socket.emit("channels", err)
+    server.emit("channels", err)
   }
 }
 
-server.on("connection", function (socket) {
-  socket.on("channels", () => {
-    updateChannels(socket)
-  })
+// Ao8BMp8Z5kl4lshbSEMPqCi1x1x8Ha
+server.on("channels", () => {
+  updateChannels(socket)
+})
 
-  nms.on("prePublish", (id, _, args) => {
-    const session = nms.getSession(id)
-    if (!args.streamKey || args.streamKey !== SECRET) {
-      session.reject()
-    } else {
-      updateChannels(socket)
-    }
-  })
+nms.on("prePublish", (id, _, args) => {
+  const session = nms.getSession(id)
+  if (!args.streamKey || args.streamKey !== SECRET) {
+    session.reject()
+  } else {
+    updateChannels()
+  }
+})
 
-  nms.on("donePublish", () => {
-    updateChannels(socket)
-  })
+nms.on("donePublish", () => {
+  updateChannels()
+})
 
-  nms.on("prePlay", () => {
-    updateChannels(socket)
-  })
+nms.on("prePlay", () => {
+  updateChannels()
+})
 
-  nms.on("donePlay", () => {
-    updateChannels(socket)
-  })
+nms.on("donePlay", () => {
+  updateChannels()
 })
