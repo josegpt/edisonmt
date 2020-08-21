@@ -34,7 +34,7 @@ function Stream({ state, dispatch }) {
           </div>
         </h1>
         <Link href="/">
-          <a className="text-xl text-blue-500 ">regresar</a>
+          <a className="text-xl text-blue-500 ">Pagina Inicio</a>
         </Link>
       </section>
     )

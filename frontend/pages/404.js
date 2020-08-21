@@ -14,7 +14,7 @@ function Custom404() {
       </h1>
       <span className="text-xl">pagina no disponible</span>
       <Link href="/">
-        <a className="text-xl text-blue-500 ">regresar</a>
+        <a className="text-xl text-blue-500 ">Pagina Inicio</a>
       </Link>
     </section>
   )

@@ -10,7 +10,6 @@ function Index({ state, dispatch }) {
     dispatch({ type: FETCH_CHANNELS_SUCCESS, payload })
   })
 
-  console.log(state)
   if (state.isLoading) {
     return <Loader />
   }

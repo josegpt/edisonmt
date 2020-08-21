@@ -4,7 +4,6 @@ export const FETCH_CHANNELS_SUCCESS = "FETCH_CHANNELS_SUCCESS"
 export const FETCH_CHANNELS_FAILURE = "FETCH_CHANNELS_FAILURE"
 
 function reducer(state, action) {
-  console.log(action.type)
   switch (action.type) {
     case FETCH_CHANNELS_REQUEST:
       return { ...state, isLoading: true }
