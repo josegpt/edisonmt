@@ -54,8 +54,9 @@ server.on("connection", function (socket) {
     const session = nms.getSession(id)
     if (!args.streamKey || args.streamKey !== SECRET) {
       session.reject()
+    } else {
+      updateChannels(socket)
     }
-    updateChannels(socket)
   })
 
   nms.on("donePublish", () => {
