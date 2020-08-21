@@ -39,19 +39,20 @@ async function updateChannels(socket) {
         password: PASS,
       },
     })
-    socket.emit("channels", data)
+    server.emit("channels", data)
   } catch (err) {
-    server.emit("channels", err)
+    socket.emit("channels", err)
   }
 }
 
 server.on("connection", (socket) => {
   console.log(`Socket ${socket.id} connected.`)
-  updateChannels(socket)
-
   socket.on("disconnect", () =>
     console.log(`Socket ${socket.id} disconnected.`)
   )
+  socket.on("channels", () => {
+    updateChannels(socket)
+  })
 
   nms.on("prePublish", (id, _, args) => {
     const session = nms.getSession(id)

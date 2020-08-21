@@ -1,6 +1,7 @@
 import _ from "lodash"
-import { useRouter } from "next/router"
 import Link from "next/link"
+import { useEffect } from "react"
+import { useRouter } from "next/router"
 import useSocket from "../../hooks/useSocket"
 import Player from "../../components/Player"
 import Loader from "../../components/Loader"
@@ -10,10 +11,18 @@ import { FETCH_CHANNELS_REQUEST, FETCH_CHANNELS_SUCCESS } from "../../store"
 function Stream({ state, dispatch }) {
   const router = useRouter()
 
-  useSocket("channels", (payload) => {
-    dispatch({ type: FETCH_CHANNELS_REQUEST })
-    dispatch({ type: FETCH_CHANNELS_SUCCESS, payload })
-  })
+  if (_.isEmpty(state.data)) {
+    console.log("DISPATCH INSIDE")
+    const socket = useSocket("channels", (payload) => {
+      dispatch({ type: FETCH_CHANNELS_REQUEST })
+      dispatch({ type: FETCH_CHANNELS_SUCCESS, payload })
+    })
+
+    useEffect(() => {
+      if (!socket.current) return
+      socket.current.emit("channels")
+    }, [socket])
+  }
 
   if (state.isLoading) {
     return <Loader />
@@ -41,15 +50,11 @@ function Stream({ state, dispatch }) {
   }
 
   const [channel, stream] = router.query.slug
-  const { publisher, subscribers } = state.data[channel][stream]
-
+  const { publisher } = state.data[channel][stream]
   return (
     <section className="flex items-center flex-1 px-4">
       <div className="container mx-auto">
-        <Primary
-          title={`${publisher.app} ${subscribers.length}`}
-          subtitle={publisher.stream}
-        />
+        <Primary title={`${publisher.app}`} subtitle={publisher.stream} />
 
         <main className="relative pb-1/3">
           <Player

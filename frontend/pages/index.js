@@ -1,14 +1,20 @@
 import _ from "lodash"
+import { useEffect } from "react"
 import Loader from "../components/Loader"
 import useSocket from "../hooks/useSocket"
 import Transmission from "../components/Transmission"
 import { FETCH_CHANNELS_REQUEST, FETCH_CHANNELS_SUCCESS } from "../store"
 
 function Index({ state, dispatch }) {
-  useSocket("channels", (payload) => {
+  const socket = useSocket("channels", (payload) => {
     dispatch({ type: FETCH_CHANNELS_REQUEST })
     dispatch({ type: FETCH_CHANNELS_SUCCESS, payload })
   })
+
+  useEffect(() => {
+    if (!socket.current) return
+    socket.current.emit("channels")
+  }, [socket])
 
   if (state.isLoading) {
     return <Loader />
