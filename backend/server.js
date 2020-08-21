@@ -3,8 +3,12 @@ const _ = require("lodash")
 const axios = require("axios")
 const io = require("socket.io")
 
+const USER = process.env.RTMP_USER || "dev"
+const PASS = process.env.RTMP_PASS || "dev"
+const SECRET = process.env.RTMP_SECRET || "dev"
+
 const config = {
-  logType: 3,
+  logType: 1,
   rtmp: {
     port: 1935,
     chunk_size: 60000,
@@ -17,8 +21,9 @@ const config = {
     allow_origin: "*",
   },
   auth: {
-    publish: true,
-    secret: process.env.RTMP_SECRET,
+    api: true,
+    api_user: USER,
+    api_pass: PASS,
   },
 }
 
@@ -28,7 +33,12 @@ nms.run()
 
 async function updateChannels(socket) {
   try {
-    const { data } = await axios.get("http://localhost:8000/api/streams")
+    const { data } = await axios.get("http://localhost:8000/api/streams", {
+      auth: {
+        username: USER,
+        password: PASS,
+      },
+    })
     socket.emit("channels", data)
   } catch (err) {
     socket.emit("channels", err)
@@ -40,7 +50,11 @@ server.on("connection", function (socket) {
     updateChannels(socket)
   })
 
-  nms.on("prePublish", () => {
+  nms.on("prePublish", (id, _, args) => {
+    const session = nms.getSession(id)
+    if (!args.streamKey || args.streamKey !== SECRET) {
+      session.reject()
+    }
     updateChannels(socket)
   })
 
