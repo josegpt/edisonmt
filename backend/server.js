@@ -8,7 +8,7 @@ const PASS = process.env.RTMP_PASS || "dev"
 const SECRET = process.env.RTMP_SECRET || "dev"
 
 const config = {
-  logType: 1,
+  logType: 3,
   rtmp: {
     port: 1935,
     chunk_size: 60000,
@@ -45,7 +45,6 @@ async function updateChannels() {
   }
 }
 
-// Ao8BMp8Z5kl4lshbSEMPqCi1x1x8Ha
 server.on("channels", () => {
   updateChannels(socket)
 })
