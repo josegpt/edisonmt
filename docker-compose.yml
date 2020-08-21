@@ -10,6 +10,8 @@ services:
     container_name: backend
     env_file:
       - edisonmt.env
+    ports:
+      - 1935:1935
     restart: unless-stopped
   swag:
     image: linuxserver/letsencrypt
@@ -29,5 +31,4 @@ services:
     ports:
       - 443:443
       - 80:80
-      - 1935:1935
     restart: unless-stopped
