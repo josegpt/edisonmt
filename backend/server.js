@@ -16,6 +16,10 @@ const config = {
     port: 8000,
     allow_origin: "*",
   },
+  auth: {
+    publish: true,
+    secret: process.env.RTMP_SECRET,
+  },
 }
 
 const server = io.listen(5000)
@@ -32,10 +36,6 @@ async function updateChannels(socket) {
 }
 
 server.on("connection", function (socket) {
-  console.log("user connected")
-
-  socket.on("disconnect", () => console.log("user disconnected"))
-
   socket.on("channels", () => {
     updateChannels(socket)
   })
