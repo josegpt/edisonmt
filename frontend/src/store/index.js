@@ -8,7 +8,6 @@ export default new Vuex.Store({
     isLoading: false,
     error: null,
     streams: [],
-    stream: {},
   },
   actions: {
     fetchStreamsRequest({ state }) {
@@ -16,20 +15,12 @@ export default new Vuex.Store({
     },
     fetchStreamsSuccess({ state }, payload) {
       state.isLoading = false
-      state.streams = payload
+      const payloadPath = payload.rtmp.server[0].application[0].live[0]
+      if (payloadPath && payloadPath.stream && payloadPath.stream[0].name) {
+        state.streams = [...payloadPath.stream[0].name]
+      }
     },
     fetchStreamsFailure({ state }, err) {
-      state.isLoading = false
-      state.error = err
-    },
-    fetchStreamRequest({ state }) {
-      state.isLoading = true
-    },
-    fetchStreamSuccess({ state }, payload) {
-      state.isLoading = false
-      state.stream = payload
-    },
-    fetchStreamFailure({ state }, err) {
       state.isLoading = false
       state.error = err
     },

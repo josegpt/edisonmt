@@ -1,7 +1,7 @@
 <template>
-  <Loader v-if="state.isLoading" />
+  <Loader v-if="isLoading" />
   <section
-    v-else-if="state.streams.length === 0 || state.error"
+    v-else-if="streams.length === 0 || isError"
     class="flex items-center justify-center flex-1"
   >
     <h1 class="flex justify-center text-3xl capitalize">
@@ -12,9 +12,9 @@
           />
           <span class="relative inline-flex w-3 h-3 bg-red-500 rounded-full" />
         </span>
-        <span class="ml-2 text-2xl font-semibold sm:text-3xl">
-          desconectado
-        </span>
+        <span class="ml-2 text-2xl font-semibold sm:text-3xl"
+          >desconectado</span
+        >
       </div>
     </h1>
   </section>
@@ -24,8 +24,8 @@
         <Card
           v-for="(stream, i) in streams"
           :key="i"
-          :title="stream.title"
-          :url="`https://edisonmt.com/hls/${stream.title}.m3u8`"
+          :title="stream"
+          :url="`/stream/${stream}`"
           :viewers="0"
         />
       </main>
@@ -47,16 +47,21 @@ export default {
     Card,
   },
   computed: {
-    state() {
-      return this.$store.state
+    streams() {
+      return this.$store.state.streams
+    },
+    isLoading() {
+      return this.$store.state.isLoading
+    },
+    isError() {
+      return this.$store.state.error
     },
   },
   mounted() {
-    this.$store.dispatch("fetchStreamsRequest")
     axios
       .get("https://edisonmt.com/stats")
       .then((response) => {
-        parseString(response, (err, result) => {
+        parseString(t, (err, result) => {
           if (err) this.$store.dispatch("fetchStreamsFailure", err)
           this.$store.dispatch("fetchStreamsSuccess", result)
         })

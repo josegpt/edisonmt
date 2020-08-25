@@ -1,7 +1,7 @@
 <template>
-  <Loader v-if="state.isLoading" />
+  <Loader v-if="isLoading" />
   <section
-    v-else-if="Object.keys(state.stream) === 0 || state.error"
+    v-else-if="streams.length === 0 || isError"
     class="flex flex-col items-center justify-center flex-1 capitalize"
   >
     <h1 class="flex">
@@ -34,17 +34,19 @@
             />
           </span>
         </div>
-        <span>{{ state.stream.title }}</span>
+        <span>{{ stream }}</span>
       </h1>
 
       <main class="relative pb-1/3">
-        <Player :url="`https://edisonmt.com/hls/${state.stream.title}.m3u8`" />
+        <Player :url="`https://edisonmt.com/hls/${stream}.m3u8`" />
       </main>
     </div>
   </section>
 </template>
 
 <script>
+import axios from "axios"
+import { parseString } from "xml2js"
 import Loader from "@/components/Loader.vue"
 import Player from "@/components/Player.vue"
 
@@ -55,21 +57,29 @@ export default {
     Loader,
   },
   computed: {
-    state() {
-      return this.$store.state
+    stream() {
+      return this.$route.params.stream
+    },
+    streams() {
+      return this.$store.state.streams
+    },
+    isLoading() {
+      return this.$store.state.isLoading
+    },
+    isError() {
+      return this.$store.state.error
     },
   },
   mounted() {
-    this.$store.dispatch("fetchStreamRequest")
     axios
       .get("https://edisonmt.com/stats")
       .then((response) => {
-        parseString(response, (err, result) => {
-          if (err) this.$store.dispatch("fetchStreamFailure", err)
-          this.$store.dispatch("fetchStreamSuccess", result)
+        parseString(t, (err, result) => {
+          if (err) this.$store.dispatch("fetchStreamsFailure", err)
+          this.$store.dispatch("fetchStreamsSuccess", result)
         })
       })
-      .catch((err) => this.$store.dispatch("fetchStreamFailure", err))
+      .catch((err) => this.$store.dispatch("fetchStreamsFailure", err))
   },
 }
 </script>
