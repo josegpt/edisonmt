@@ -28,18 +28,6 @@ async function fetchStreams() {
   }
 }
 
-async function fetchStream() {
-  try {
-    const response = await axios.get("https://edisonmt.com/stats")
-    const result = xml2json(response.data, { compact: true, spaces: 2 })
-    const data = JSON.parse(result)
-    const streams = data.rtmp.server.application.live.stream
-    return _.isArray(streams) ? streams : streams ? [streams] : []
-  } catch (err) {
-    return err
-  }
-}
-
 app.post("/auth", async (req, res) => {
   if (req.body.streamKey === RTMP_SECRET) {
     res.sendStatus(201)
