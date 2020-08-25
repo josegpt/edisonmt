@@ -9,21 +9,32 @@ export default new Vuex.Store({
     error: null,
     streams: [],
   },
-  actions: {
-    fetchStreamsRequest({ state }) {
+  getters: {
+    isStreamLive: (state) => (streamId) =>
+      state.streams.find((stream) => streamId === stream.name._text),
+  },
+  mutations: {
+    fetchStreamsRequest(state) {
       state.isLoading = true
     },
-    fetchStreamsSuccess({ state }, payload) {
+    fetchStreamsSuccess(state, payload) {
       state.isLoading = false
-      const payloadPath = payload.rtmp.server[0].application[0].live[0]
-      if (payloadPath && payloadPath.stream && payloadPath.stream[0].name) {
-        state.streams = [...payloadPath.stream[0].name]
-      }
+      state.streams = payload
     },
-    fetchStreamsFailure({ state }, err) {
+    fetchStreamsFailure(state, payload) {
       state.isLoading = false
-      state.error = err
+      state.error = payload
     },
   },
-  modules: {},
+  actions: {
+    SOCKET_streams({ commit }, payload) {
+      commit("fetchStreamsSuccess", payload)
+    },
+    SOCKET_error({ commit }, payload) {
+      commit("fetchStreamsFailure", payload)
+    },
+    fetchStreamsRequest({ commit }) {
+      commit("fetchStreamsRequest")
+    },
+  },
 })

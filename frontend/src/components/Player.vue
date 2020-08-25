@@ -29,18 +29,18 @@ export default {
         ga: {},
         i18n: {
           en: {
-            live: "live",
-            back_to_live: "back to live",
-            disabled: "Disabled",
+            live: "en vivo",
+            back_to_live: "volver a transmission en vivo",
+            disabled: "deshabilitado",
             playback_not_supported:
-              "Your browser does not support the playback of this video. Please try using a different browser.",
-            default_error_title: "Could not play video.",
+              "Su navegador no admite la reproducción de este video. Intente utilizar un navegador diferente.",
+            default_error_title: "No se pudo reproducir el video.",
             default_error_message:
-              "There was a problem trying to load the video.",
+              "Hubo un problema al intentar cargar el video.",
           },
         },
         watermark: {
-          image: "/img/icon.png",
+          image: "/img/player-logo.png",
           url: "https://edisonmt.com",
           position: "top-left",
         },

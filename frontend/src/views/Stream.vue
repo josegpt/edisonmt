@@ -1,7 +1,7 @@
 <template>
   <Loader v-if="isLoading" />
   <section
-    v-else-if="streams.length === 0 || isError"
+    v-else-if="!isLive || error"
     class="flex flex-col items-center justify-center flex-1 capitalize"
   >
     <h1 class="flex">
@@ -12,14 +12,12 @@
           />
           <span class="relative inline-flex w-3 h-3 bg-red-500 rounded-full" />
         </span>
-        <span class="ml-2 text-xl font-semibold sm:text-3xl">
-          transmision terminada
-        </span>
+        <span class="ml-2 text-xl font-semibold sm:text-3xl"
+          >transmision terminada</span
+        >
       </div>
     </h1>
-    <router-link to="/" class="text-xl text-blue-500">
-      inicio
-    </router-link>
+    <router-link to="/" class="text-xl text-blue-500">inicio</router-link>
   </section>
   <section v-else class="flex items-center flex-1 px-4">
     <div class="container mx-auto">
@@ -33,20 +31,18 @@
               class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
             />
           </span>
+          <span class="ml-2">{{ isLive.name._text }}</span>
         </div>
-        <span>{{ stream }}</span>
       </h1>
-
       <main class="relative pb-1/3">
-        <Player :url="`https://edisonmt.com/hls/${stream}.m3u8`" />
+        <Player :url="`https://edisonmt.com/hls/${isLive.name._text}.m3u8`" />
       </main>
     </div>
   </section>
 </template>
 
 <script>
-import axios from "axios"
-import { parseString } from "xml2js"
+import { mapState, mapGetters } from "vuex"
 import Loader from "@/components/Loader.vue"
 import Player from "@/components/Player.vue"
 
@@ -57,29 +53,18 @@ export default {
     Loader,
   },
   computed: {
-    stream() {
-      return this.$route.params.stream
+    isLive() {
+      const { stream } = this.$route.params
+      return this.$store.getters.isStreamLive(stream)
     },
-    streams() {
-      return this.$store.state.streams
-    },
-    isLoading() {
-      return this.$store.state.isLoading
-    },
-    isError() {
-      return this.$store.state.error
-    },
+    ...mapState({
+      isLoading: (state) => state.isLoading,
+      error: (state) => state.error,
+    }),
   },
   mounted() {
-    axios
-      .get("https://edisonmt.com/stats")
-      .then((response) => {
-        parseString(response.data, (err, result) => {
-          if (err) this.$store.dispatch("fetchStreamsFailure", err)
-          this.$store.dispatch("fetchStreamsSuccess", result)
-        })
-      })
-      .catch((err) => this.$store.dispatch("fetchStreamsFailure", err))
+    this.$store.dispatch("fetchStreamsRequest")
+    this.$socket.emit("streams")
   },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <Loader v-if="isLoading" />
   <section
-    v-else-if="streams.length === 0 || isError"
+    v-else-if="streams.length === 0 || error"
     class="flex items-center justify-center flex-1"
   >
     <h1 class="flex justify-center text-3xl capitalize">
@@ -24,8 +24,8 @@
         <Card
           v-for="(stream, i) in streams"
           :key="i"
-          :title="stream"
-          :url="`/stream/${stream}`"
+          :title="stream.name._text"
+          :url="`/stream/${stream.name._text}`"
           :viewers="0"
         />
       </main>
@@ -35,8 +35,7 @@
 
 <script>
 // @ is an alias to /src
-import axios from "axios"
-import { parseString } from "xml2js"
+import { mapState } from "vuex"
 import Loader from "@/components/Loader.vue"
 import Card from "@/components/Card.vue"
 
@@ -46,27 +45,14 @@ export default {
     Loader,
     Card,
   },
-  computed: {
-    streams() {
-      return this.$store.state.streams
-    },
-    isLoading() {
-      return this.$store.state.isLoading
-    },
-    isError() {
-      return this.$store.state.error
-    },
-  },
+  computed: mapState({
+    isLoading: (state) => state.isLoading,
+    error: (state) => state.error,
+    streams: (state) => state.streams,
+  }),
   mounted() {
-    axios
-      .get("https://edisonmt.com/stats")
-      .then((response) => {
-        parseString(response.data, (err, result) => {
-          if (err) this.$store.dispatch("fetchStreamsFailure", err)
-          this.$store.dispatch("fetchStreamsSuccess", result)
-        })
-      })
-      .catch((err) => this.$store.dispatch("fetchStreamsFailure", err))
+    this.$store.dispatch("fetchStreamsRequest")
+    this.$socket.emit("streams")
   },
 }
 </script>
