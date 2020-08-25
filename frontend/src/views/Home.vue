@@ -61,7 +61,7 @@ export default {
     axios
       .get("https://edisonmt.com/stats")
       .then((response) => {
-        parseString(response, (err, result) => {
+        parseString(response.data, (err, result) => {
           if (err) this.$store.dispatch("fetchStreamsFailure", err)
           this.$store.dispatch("fetchStreamsSuccess", result)
         })
