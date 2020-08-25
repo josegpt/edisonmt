@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 
 async function fetchStreams() {
   try {
-    const response = await axios.get("https://edisonmt.com/stats")
+    const response = await axios.get("http://swag:8000")
     const result = xml2json(response.data, { compact: true, spaces: 2 })
     const data = JSON.parse(result)
     const streams = data.rtmp.server.application.live.stream
@@ -42,10 +42,15 @@ app.get("*", (req, res) => {
   res.sendStatus(401)
 })
 
+let activeUsers = 0
 io.on("connection", (socket) => {
-  console.log(`Connected socket ${socket.id}`)
+  activeUsers++
+  console.log(`Connected socket ${socket.id} - ${activeUsers}`)
 
-  socket.on("disconnect", () => console.log(`Disconnected socket ${socket.id}`))
+  socket.on("disconnect", () => {
+    activeUsers--
+    console.log(`Disconnected socket ${socket.id} ${activeUsers}`)
+  })
 
   socket.on("streams", async () => {
     socket.emit("streams", await fetchStreams())
