@@ -1,28 +1,27 @@
 {
-  "name": "app",
+  "name": "EdisonMT",
   "version": "0.1.0",
   "private": true,
-  "main": "server.js",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "flv.js": "^1.5.0",
-    "lodash": "^4.17.20",
-    "next": "9.5.1",
-    "react": "16.13.1",
-    "react-chat-widget": "^3.0.5",
-    "react-dom": "16.13.1",
-    "socket.io-client": "^2.3.0"
+    "axios": "^0.20.0",
+    "core-js": "^3.6.5",
+    "v-clappr": "^1.1.1",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
     "autoprefixer": "^9.8.6",
-    "nodemon": "^2.0.4",
-    "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.0.5",
-    "tailwindcss": "^1.6.2"
+    "tailwindcss": "^1.7.3",
+    "vue-template-compiler": "^2.6.11"
   }
 }

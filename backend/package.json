@@ -1,20 +1,17 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "RTMP Server",
+  "description": "Stream video server",
   "main": "server.js",
   "author": "Jose G Perez Taveras",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon",
-    "start": "node server.js"
+    "dev": "nodemon"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "lodash": "^4.17.20",
-    "node-media-server": "^2.2.2",
-    "socket.io": "^2.3.0"
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

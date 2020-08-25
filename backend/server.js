@@ -1,77 +1,23 @@
-const NodeMediaServer = require("node-media-server")
-const _ = require("lodash")
-const axios = require("axios")
-const io = require("socket.io")
+const express = require("express")
+const bodyParser = require("body-parser")
 
-const USER = process.env.RTMP_USER || "dev"
-const PASS = process.env.RTMP_PASS || "dev"
-const SECRET = process.env.RTMP_SECRET || "dev"
+const app = express()
+const RTMP_SECRET = process.env.RTMP_SECRET || "dev"
 
-const config = {
-  logType: 3,
-  rtmp: {
-    port: 1935,
-    chunk_size: 60000,
-    gop_cache: true,
-    ping: 30,
-    ping_timeout: 60,
-  },
-  http: {
-    port: 8000,
-    allow_origin: "*",
-  },
-  auth: {
-    api: true,
-    api_user: USER,
-    api_pass: PASS,
-  },
-}
+app.use(bodyParser.urlencoded({ extended: false }))
 
-const server = io.listen(5000)
-const nms = new NodeMediaServer(config)
-nms.run()
-
-async function updateChannels(socket) {
-  try {
-    const { data } = await axios.get("http://localhost:8000/api/streams", {
-      auth: {
-        username: USER,
-        password: PASS,
-      },
-    })
-    server.emit("channels", data)
-  } catch (err) {
-    socket.emit("channels", err)
+app.post("/auth", (req, res) => {
+  if (req.body.streamKey === RTMP_SECRET) {
+    res.sendStatus(201)
+  } else {
+    res.sendStatus(404)
   }
-}
+})
 
-server.on("connection", (socket) => {
-  console.log(`Socket ${socket.id} connected.`)
-  socket.on("disconnect", () =>
-    console.log(`Socket ${socket.id} disconnected.`)
-  )
-  socket.on("channels", () => {
-    updateChannels(socket)
-  })
+app.get("*", (req, res) => {
+  res.sendStatus(401)
+})
 
-  nms.on("prePublish", (id, _, args) => {
-    const session = nms.getSession(id)
-    if (!args.streamKey || args.streamKey !== SECRET) {
-      session.reject()
-    } else {
-      updateChannels(socket)
-    }
-  })
-
-  nms.on("donePublish", () => {
-    updateChannels(socket)
-  })
-
-  nms.on("prePlay", () => {
-    updateChannels(socket)
-  })
-
-  nms.on("donePlay", () => {
-    updateChannels(socket)
-  })
+app.listen(3000, () => {
+  console.log("Server started at http://localhost:3000")
 })
