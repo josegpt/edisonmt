@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 
 async function fetchStreams() {
   try {
-    const response = await axios.get("http://swag:8000")
+    const response = await axios.get("http://swag:8000/stats")
     const result = xml2json(response.data, { compact: true, spaces: 2 })
     const data = JSON.parse(result)
     const streams = data.rtmp.server.application.live.stream
