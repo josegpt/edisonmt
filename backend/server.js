@@ -45,6 +45,7 @@ function createInMemoryDB() {
     },
     countStreamSubscribers: (stream) => streams[stream].length || 0,
     existStream: (stream) => Object.keys(streams).includes(stream),
+    getStreams: () => streams,
   }
 }
 
@@ -57,6 +58,7 @@ async function fetchStreams() {
     if (data) {
       return data.map((el) => {
         const title = el.name[0]
+        console.log(db.getStreams())
         return { title, viewers: db.countStreamSubscribers(title) }
       })
     } else {
