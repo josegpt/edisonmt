@@ -1,6 +1,5 @@
 const http = require("http")
 const axios = require("axios")
-const _ = require("lodash")
 const { parseStringPromise } = require("xml2js")
 const express = require("express")
 const bodyParser = require("body-parser")
@@ -15,8 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 function createInMemoryDB() {
   let streams = {}
 
-  console.log(streams)
-
   return {
     createStream: (stream) => {
       streams[stream] = []
@@ -24,6 +21,7 @@ function createInMemoryDB() {
     addSocket: (stream, socketId) => {
       streams[stream].push(socketId)
     },
+    findByTitle: () => streams[stream],
     removeSocket: (stream, socketId) => {
       const index = streams[stream].indexOf(socketId)
       if (index > -1) {
@@ -53,6 +51,7 @@ async function fetchStreams() {
     if (data) {
       return data.map((el) => {
         const title = el.name[0]
+        console.log(db.findByTitle(title))
         return { title, viewers: db.countStreamSubscribers(title) }
       })
     } else {
