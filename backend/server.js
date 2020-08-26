@@ -28,7 +28,7 @@ function createInMemoryDB() {
     removeSocket: (stream, socketId) => {
       const index = streams[stream].indexOf(socketId)
       if (index > -1) {
-        streams.splice(index, 1)
+        streams[stream].splice(index, 1)
       }
     },
     removeStream: (stream) => {
