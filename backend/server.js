@@ -69,7 +69,7 @@ app.post("/auth", async (req, res) => {
 
 app.post("/done", (req, res) => {
   if (db.existStream(req.body.name)) {
-    db.r
+    db.removeStream(req.body.name)
   }
 })
 
