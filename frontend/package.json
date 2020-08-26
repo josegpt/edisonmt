@@ -13,6 +13,7 @@
     "v-clappr": "^1.1.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vue-script-component": "^0.1.7",
     "vue-socket.io": "^3.0.10",
     "vuex": "^3.4.0"
   },
@@ -22,6 +23,8 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "autoprefixer": "^9.8.6",
+    "document-ready": "^2.0.2",
+    "postscribe": "^2.0.8",
     "tailwindcss": "^1.7.3",
     "vue-template-compiler": "^2.6.11"
   }

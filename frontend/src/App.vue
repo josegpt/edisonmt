@@ -2,19 +2,19 @@
   <div
     class="flex flex-col min-h-screen font-sans antialiased text-white bg-black"
   >
-    <Head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-      <meta name="theme-color" content="#D0021B" />
-      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-      <title>EdisonMT</title>
-    </Head>
     <header class="flex items-center justify-center">
       <Logo />
     </header>
     <main class="flex flex-1 pt-4">
       <router-view :key="$route.path" />
     </main>
+    <Ad
+      apiKey="3db1d71994426446b256d378e1687d27"
+      format="iframe"
+      :height="320"
+      :width="50"
+      :params="{}"
+    />
     <footer class="flex flex-col items-center justify-center my-1">
       <SocialNetworks />
       <p class="text-xs text-center">
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import Ad from "@/components/Ad.vue"
 import Logo from "@/components/Logo.vue"
 import SocialNetworks from "@/components/SocialNetworks.vue"
 
@@ -33,6 +34,7 @@ export default {
   components: {
     Logo,
     SocialNetworks,
+    Ad,
   },
 }
 </script>
