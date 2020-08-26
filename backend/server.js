@@ -21,7 +21,13 @@ function createInMemoryDB() {
     addSocket: (stream, socketId) => {
       streams[stream].push(socketId)
     },
-    findByTitle: () => streams[stream],
+    findByTitle(stream) {
+      if (this.existStream(stream)) {
+        return streams[stream]
+      }
+
+      return null
+    },
     removeSocket: (stream, socketId) => {
       const index = streams[stream].indexOf(socketId)
       if (index > -1) {
