@@ -4,7 +4,6 @@ const _ = require("lodash")
 const { parseStringPromise } = require("xml2js")
 const express = require("express")
 const bodyParser = require("body-parser")
-const { add } = require("lodash")
 
 const app = express()
 const server = http.createServer(app)
@@ -29,6 +28,12 @@ function createInMemoryDB() {
       const index = streams[stream].indexOf(socketId)
       if (index > -1) {
         streams[stream].splice(index, 1)
+      }
+    },
+    removeSocketFromAllStreams(socketId) {
+      const allStreams = Object.keys(streams)
+      if (allStreams.length > 0) {
+        allStreams.forEach((stream) => this.removeSocket(stream, socketId))
       }
     },
     removeStream: (stream) => {
@@ -100,6 +105,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     clearInterval(refInterval)
+    db.removeSocketFromAllStreams(socket.id)
     console.log(`Disconnected socket ${socket.id}`)
   })
 })
