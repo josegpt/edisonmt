@@ -19,6 +19,7 @@ function createInMemoryDB() {
       streams[stream] = []
     },
     addSocket: (stream, socketId) => {
+      console.log(stream)
       streams[stream].push(socketId)
     },
     findByTitle(stream) {
@@ -96,14 +97,14 @@ io.on("connection", (socket) => {
 
   socket.on("joinStream", (stream) => {
     if (db.existStream(stream)) {
-      db.addSocket(stream, socket.io)
+      db.addSocket(stream, socket.id)
       socket.join(stream)
     }
   })
 
   socket.on("leaveStream", (stream) => {
     if (db.existStream(stream)) {
-      db.removeSocket(stream, socket.io)
+      db.removeSocket(stream, socket.id)
       socket.leave(stream)
     }
   })
