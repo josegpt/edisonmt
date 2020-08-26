@@ -6,7 +6,7 @@
     <span class="text-2xl font-semibold capitalize">{{ title }}</span>
     <!-- <span class="absolute top-0 right-0 p-4 text-xs font-semibold lowercase">
       {{ viewers }} {{ viewers === 1 ? "espectador" : "espectadores" }}
-    </span> -->
+    </span>-->
   </router-link>
 </template>
 

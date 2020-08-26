@@ -11,7 +11,7 @@ export default new Vuex.Store({
   },
   getters: {
     isStreamLive: (state) => (streamId) =>
-      state.streams.find((stream) => streamId === stream.name._text),
+      state.streams.find((stream) => streamId === stream),
   },
   mutations: {
     fetchStreamsRequest(state) {

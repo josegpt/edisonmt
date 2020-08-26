@@ -12,8 +12,6 @@
       </div>
     </h1>
     <span class="text-xl">pagina no disponible</span>
-    <router-link to="/" class="text-xl text-blue-500">
-      inicio
-    </router-link>
+    <router-link to="/" class="text-xl text-blue-500">inicio</router-link>
   </section>
 </template>

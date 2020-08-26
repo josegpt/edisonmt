@@ -3,7 +3,7 @@
     class="flex flex-col min-h-screen font-sans antialiased text-white bg-black"
   >
     <Head>
-      <meta charSet="utf-8" />
+      <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width,initial-scale=1.0" />
       <meta name="theme-color" content="#D0021B" />
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -12,7 +12,9 @@
     <header class="flex items-center justify-center">
       <Logo />
     </header>
-    <main class="flex flex-1 pt-4"><router-view /></main>
+    <main class="flex flex-1 pt-4">
+      <router-view :key="$route.path" />
+    </main>
     <footer class="flex flex-col items-center justify-center my-1">
       <SocialNetworks />
       <p class="text-xs text-center">

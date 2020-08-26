@@ -31,11 +31,11 @@
               class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
             />
           </span>
-          <span class="ml-2">{{ isLive.name._text }}</span>
+          <span class="ml-2">{{ isLive }}</span>
         </div>
       </h1>
       <main class="relative pb-1/3">
-        <Player :url="`https://edisonmt.com/hls/${isLive.name._text}.m3u8`" />
+        <Player :url="`https://edisonmt.com/hls/${isLive}.m3u8`" />
       </main>
     </div>
   </section>
@@ -64,7 +64,11 @@ export default {
   },
   mounted() {
     this.$store.dispatch("fetchStreamsRequest")
-    this.$socket.emit("streams")
+    this.$socket.emit("joinStream", this.$route.params.stream)
+  },
+  beforeRouteLeave(to, from, next) {
+    this.$socket.emit("leaveStream", from.params.stream)
+    next()
   },
 }
 </script>

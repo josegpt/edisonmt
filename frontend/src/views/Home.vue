@@ -24,9 +24,9 @@
         <Card
           v-for="(stream, i) in streams"
           :key="i"
-          :title="stream.name._text"
-          :url="`/stream/${stream.name._text}`"
-          :viewers="0"
+          :title="stream.title"
+          :url="`/stream/${stream.title}`"
+          :viewers="stream.viewers"
         />
       </main>
     </div>
@@ -52,7 +52,6 @@ export default {
   }),
   mounted() {
     this.$store.dispatch("fetchStreamsRequest")
-    this.$socket.emit("streams")
   },
 }
 </script>
