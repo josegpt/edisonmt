@@ -26,16 +26,16 @@ function createInMemoryDB() {
       streams[stream].push(socketId)
     },
     removeSocket: (stream, socketId) => {
-      const index = treams[stream].indexOf(socketId)
+      const index = streams[stream].indexOf(socketId)
       if (index > -1) {
         streams.splice(index, 1)
       }
     },
-    countStreamSubscribers: (stream) => streams[stream].length,
-    existStream: (stream) => Object.keys(streams).includes(stream),
-    reset: () => {
-      streams = {}
+    removeStream: (stream) => {
+      delete streams[stream]
     },
+    countStreamSubscribers: (stream) => streams[stream].length || 0,
+    existStream: (stream) => Object.keys(streams).includes(stream),
   }
 }
 
@@ -68,7 +68,9 @@ app.post("/auth", async (req, res) => {
 })
 
 app.post("/done", (req, res) => {
-  console.log(req.body)
+  if (db.existStream(req.body.name)) {
+    db.r
+  }
 })
 
 app.get("*", (req, res) => {
