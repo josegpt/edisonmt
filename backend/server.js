@@ -96,14 +96,14 @@ io.on("connection", (socket) => {
 
   socket.on("joinStream", (stream) => {
     if (db.existStream(stream)) {
-      db.addSocket(stream)
+      db.addSocket(socket.io)
       socket.join(stream)
     }
   })
 
   socket.on("leaveStream", (stream) => {
     if (db.existStream(stream)) {
-      db.removeSocket(stream)
+      db.removeSocket(socket.io)
       socket.leave(stream)
     }
   })
