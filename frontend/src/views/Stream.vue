@@ -31,11 +31,11 @@
               class="relative inline-flex w-3 h-3 bg-green-500 rounded-full"
             />
           </span>
-          <span class="ml-2">{{ isLive }}</span>
+          <span class="ml-2">{{ isLive.title }} {{ isLive.viewers }}</span>
         </div>
       </h1>
       <main class="relative pb-1/3">
-        <Player :url="`https://edisonmt.com/hls/${isLive}.m3u8`" />
+        <Player :url="`https://edisonmt.com/hls/${isLive.title}.m3u8`" />
       </main>
     </div>
   </section>
