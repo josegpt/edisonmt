@@ -19,7 +19,6 @@ function createInMemoryDB() {
       streams[stream] = []
     },
     addSocket: (stream, socketId) => {
-      console.log(stream)
       streams[stream].push(socketId)
     },
     findByTitle(stream) {
@@ -58,7 +57,6 @@ async function fetchStreams() {
     if (data) {
       return data.map((el) => {
         const title = el.name[0]
-        console.log(db.findByTitle(title))
         return { title, viewers: db.countStreamSubscribers(title) }
       })
     } else {
