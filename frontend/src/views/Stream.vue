@@ -53,14 +53,12 @@
 import { mapState, mapGetters } from "vuex"
 import Loader from "@/components/Loader.vue"
 import Player from "@/components/Player.vue"
-import Icon from "@/components/Icon.vue"
 
 export default {
   name: "Stream",
   components: {
     Player,
     Loader,
-    Icon,
   },
   computed: {
     isLive() {
