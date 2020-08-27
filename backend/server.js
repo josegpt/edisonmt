@@ -25,7 +25,7 @@ app.get("*", (req, res) => {
 
 const getStreamSubscribers = (io, stream) =>
   new Promise((resolve, reject) => {
-    io.in(title).clients((err, clients) => {
+    io.in(stream).clients((err, clients) => {
       if (err) reject(err)
       resolve(clients.length)
     })
@@ -41,17 +41,17 @@ io.on("connection", (socket) => {
         const streams = data.map(async (el) => {
           const title = el.name[0]
           const viewers = await getStreamSubscribers(io, title)
-          console.log({ title, viewers })
           return { title, viewers }
         })
-        socket.emit("streams", streams)
+        console.log(await Promise.all(streams))
+        socket.emit("streams", await Promise.all(streams))
       } else {
         socket.emit("streams", [])
       }
     } catch (err) {
       socket.emit("error", err)
     }
-  }, 1000)
+  }, 800)
 
   socket.on("joinStream", (stream) => {
     socket.join(stream)
