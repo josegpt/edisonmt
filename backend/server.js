@@ -41,8 +41,10 @@ io.on("connection", (socket) => {
         const streams = data.map(async (el) => {
           const title = el.name[0]
           const viewers = await getStreamSubscribers(io, title)
+          console.log({ title, viewers })
           return { title, viewers }
         })
+        socket.emit("streams", streams)
       } else {
         socket.emit("streams", [])
       }
