@@ -1,7 +1,8 @@
 # env
 edisonmt.env
 
-# server config
-config/
-
 node_modules/
+
+.nyc_output
+coverage
+
