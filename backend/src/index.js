@@ -24,19 +24,21 @@ const getStreamSubscribers = (stream) =>
 
 const getStreamsSubscribers = R.map(async (stream) => ({
   title: stream,
-  viewers: await getStreamSubscribers(),
+  viewers: await getStreamSubscribers(stream),
 }))
 
 const streams = () => fetchStreams("http://swag:8000/stats")
 const fetchStreamsViewers = asyncPipe(streams, getStreamsSubscribers)
 
 io.on("connection", (socket) => {
-  const refInterval = setInterval(() => {
-    fetchStreamsViewers()
-      .then(async (response) =>
-        socket.emit("streams", await Promise.all(response))
-      )
-      .catch((error) => socket.emit("error", error))
+  const refInterval = setInterval(async () => {
+    try {
+      const response = await fetchStreamsViewers()
+      const streams = await Promise.all(response)
+      socket.emit("streams", streams)
+    } catch (error) {
+      socket.emit("error", error)
+    }
   }, 800)
 
   socket.on("joinStream", (stream) => {
